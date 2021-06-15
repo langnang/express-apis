@@ -9,7 +9,7 @@ app.all("*", function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "content-type");
   //跨域允许的请求方式
   res.header("Access-Control-Allow-Methods", "DELETE,PUT,POST,GET,OPTIONS");
-  res.header("Content-Type", "application/json");
+  // res.header("Content-Type", "application/json");
 
   if (req.method.toLowerCase() === "options") {
     res.send(200);
@@ -19,9 +19,14 @@ app.all("*", function (req, res, next) {
 });
 
 app.get("/", function (req, res, next) {
-  res.send("Got a PUT request at /user");
+  res.json({
+    status: 200,
+    statusText: "Success"
+  });
 });
-
+app.use("/anime.bilibili", require("./routes/anime.bilibili"));
+app.use("/image", require("./routes/image"));
+app.use("/image.hdslb", require("./routes/image.hdslb"));
 app.use("/music.163", require("./routes/music.163"));
 app.use("/quote.vercel", require("./routes/quote.vercel"));
 

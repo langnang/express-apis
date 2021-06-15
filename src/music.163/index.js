@@ -2,12 +2,18 @@ const axios = require("axios");
 const queryString = require("querystring");
 const { weapi, linuxapi, eapi, decrypt } = require("./utils/crypto");
 module.exports = {
+  /**
+   * 排行榜信息
+   */
   toplist: function (req, res, next) {
     axios({
       method: "get",
       url: "https://music.163.com/api/toplist"
     }).then((response) => res.json(response.data));
   },
+  /**
+   * 歌单信息
+   */
   playlist_detail: function (req, res, next) {
     axios({
       method: "get",
@@ -19,6 +25,9 @@ module.exports = {
       }
     }).then((response) => res.json(response.data));
   },
+  /**
+   * 歌单类型
+   */
   playlist_catalogue: function (req, res, next) {
     axios({
       method: "post",
@@ -26,6 +35,9 @@ module.exports = {
       data: queryString.stringify(weapi({ csrf_token: "" }))
     }).then((response) => res.json(response.data));
   },
+  /**
+   * 歌单中歌曲列表
+   */
   playlist_list: function (req, res, next) {
     axios({
       method: "post",
@@ -42,6 +54,9 @@ module.exports = {
       )
     }).then((response) => res.json(response.data));
   },
+  /**
+   * 歌手列表
+   */
   artist_list: function (req, res, next) {
     axios({
       method: "post",
@@ -59,6 +74,9 @@ module.exports = {
       )
     }).then((response) => res.json(response.data));
   },
+  /**
+   * 歌手最热的歌曲
+   */
   artist_top_song: function (req, res, next) {
     axios({
       method: "post",
@@ -77,7 +95,7 @@ module.exports = {
       url: "https://interface3.music.163.com/eapi/song/enhance/player/url",
       data: queryString.stringify(
         eapi("/api/song/enhance/player/url", {
-          ids: JSON.stringify([req.query.id || ""]),
+          ids: JSON.stringify((req.query.ids || "").split(",")),
           br: "999000",
           csrf_token: ""
         })
