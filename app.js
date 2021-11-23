@@ -1,6 +1,8 @@
-var express = require("express");
+const express = require("express");
 
-var app = express();
+const app = express();
+
+const router = require("./routes/index");
 
 app.all("*", function (req, res, next) {
   //设置允许跨域的域名，*代表允许任意域名跨域
@@ -24,11 +26,7 @@ app.get("/", function (req, res, next) {
     statusText: "Success"
   });
 });
-app.use("/anime.bilibili", require("./routes/anime.bilibili"));
-app.use("/image", require("./routes/image"));
-app.use("/image.hdslb", require("./routes/image.hdslb"));
-app.use("/music.163", require("./routes/music.163"));
-app.use("/quote.vercel", require("./routes/quote.vercel"));
+router(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
