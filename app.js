@@ -4,6 +4,10 @@ const app = express();
 
 const router = require("./routes/index");
 
+const swaggerInstall = require("./utils/swagger");
+
+swaggerInstall(app);
+
 app.all("*", function (req, res, next) {
   //设置允许跨域的域名，*代表允许任意域名跨域
   res.header("Access-Control-Allow-Origin", "*");
